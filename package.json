@@ -1,0 +1,19 @@
+{
+  "name": "emojitune",
+  "version": "1.0.0",
+  "description": "Generates emojis based on pronounciations",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mombi93/emojitune.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mombi93/emojitune/issues"
+  },
+  "homepage": "https://github.com/mombi93/emojitune#readme"
+}
