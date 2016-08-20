@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/mombi93/emojitune/issues"
   },
-  "homepage": "https://github.com/mombi93/emojitune#readme"
+  "homepage": "https://github.com/mombi93/emojitune#readme",
+  "devDependencies": {
+    "bower": "^1.7.9"
+  }
 }

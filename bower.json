@@ -1,0 +1,19 @@
+{
+  "name": "emojitune",
+  "description": "Generates emojis based on pronounciations",
+  "main": "index.js",
+  "license": "MIT",
+  "homepage": "https://github.com/mombi93/emojitune",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "^1.5.8",
+    "angular-route": "^1.5.8"
+  }
+}
