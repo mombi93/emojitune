@@ -2,9 +2,10 @@
   "name": "emojitune",
   "version": "1.0.0",
   "description": "Generates emojis based on pronounciations",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
   },
   "repository": {
     "type": "git",
@@ -15,5 +16,11 @@
   "bugs": {
     "url": "https://github.com/mombi93/emojitune/issues"
   },
-  "homepage": "https://github.com/mombi93/emojitune#readme"
+  "homepage": "https://github.com/mombi93/emojitune#readme",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "debug": "^2.2.0",
+    "express": "^4.14.0",
+    "morgan": "^1.7.0"
+  }
 }
