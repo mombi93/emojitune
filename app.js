@@ -27,54 +27,65 @@ app.use(express.static(path.join(__dirname, 'public')));
     Define your routes
 */
 const router = express.Router();
+
 router.get('/', (req, res) => {
 	res.json({
 		message: 'Hello world!'
 	});
 });
 
-router.get('/emojify', function(req, res) {
+router.post('/emojify', function(req, res) {
 
-    /*
-        Get the song name,
-        get lyrics
-        transform lyrics to emoji
-     */
+	/*
+	    Get the song name,
+	    get lyrics
+	    transform lyrics to emoji
+	 */
 
-	console.log(`user requested text ${req.body.text} to be translated`);
+    const parseArtist = req.body.artist.split(' ').join('+');
+    const parseTrack =req.body.track.split(' ').join('+');
 
-	request('http://api.lololyrics.com/0.5/getLyric?artist=Taylor+Swift&track=Blank+space',
-		(err, response, body) => {
+    console.log(parseArtist);
+    console.log(parseTrack);
 
-	//var json = JSON.stringify(xml2json(body));
-	var json = JSON.parse(xml2json(body));
-	//console.log(json);
-	//res.json({response: json.result.response});
+    const url = `http://api.lololyrics.com/0.5/getLyric?artist=${parseArtist}&track=${parseTrack}`;
 
-	const emojifyData = {
-		emoji_slova: json.result.response,
-		emoji_kluc: 'fmgvzz.zrv',
-		jezyk_s: 'en',
-		jezyk_na: 'en-x-emoji',
-		emoji_options: '-emoji_s_0-'
-	};
+    console.log(url);
 
-	request.post({url:'http://emojitranslate.com/api/', formData: emojifyData}, (err2, response2, body2) => {
+	request(url, (err, response, body) => {
 
-		if (!err && response2.statusCode == 200) {
-			console.log('my body is ', body2);
-			res.json({
-				response: body2
+			//var json = JSON.stringify(xml2json(body));
+			var json = JSON.parse(xml2json(body));
+			//console.log(json);
+			//res.json({response: json.result.response});
+
+			const emojifyData = {
+				emoji_slova: json.result.response,
+				emoji_kluc: 'fmgvzz.zrv',
+				jezyk_s: 'en',
+				jezyk_na: 'en-x-emoji',
+				emoji_options: '-emoji_s_0-'
+			};
+
+			request.post({
+				url: 'http://emojitranslate.com/api/',
+				formData: emojifyData
+			}, (err2, response2, body2) => {
+
+				if (!err && response2.statusCode == 200) {
+					console.log('my body is ', body2);
+					res.json({
+						response: body2.split('\n')
+					});
+				} else {
+					console.error(err);
+					res.json({
+						response: 'error'
+					});
+				}
 			});
-		} else {
-            console.error(err);
-            res.json({
-    			response: 'error'
-    		});
-        }
-	});
 
-	});
+		});
 })
 
 app.use('/', router);
