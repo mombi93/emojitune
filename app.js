@@ -40,12 +40,8 @@ router.post('/emojify', function(req, res) {
     const parseArtist = req.body.artist.split(' ').join('+');
     const parseTrack =req.body.track.split(' ').join('+');
 
-    console.log(parseArtist);
-    console.log(parseTrack);
 
     const url = `http://api.lololyrics.com/0.5/getLyric?artist=${parseArtist}&track=${parseTrack}`;
-
-    console.log(url);
 
 	request(url, (err, response, body) => {
 
@@ -68,7 +64,6 @@ router.post('/emojify', function(req, res) {
 			}, (err2, response2, body2) => {
 
 				if (!err && response2.statusCode == 200) {
-					console.log('my body is ', body2);
 					res.json({
 						response: body2.split('\n')
 					});

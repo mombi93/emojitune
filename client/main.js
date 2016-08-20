@@ -18,13 +18,18 @@ angular.module('emojitune.main', ['ngRoute', 'ngResource'])
                 if (!result.tracks) {
                     throw new Error('Track not found');
                 }
-                $scope.track = result.tracks.items[0];
+                var track = result.tracks.items[0];
+                $scope.track = track;
+                $scope.query = track.artists[0].name + ' – ' + track.name;
+                $resource('http://localhost:3000/emojify').save({
+                    track: track.name,
+                    artist: track.artists[0].name
+                }).$promise
+                    .then(function (result) {
+                        console.log(result);
+                        $scope.lyrics = result.response;
+                    })
             });
-
-        $resource('http://localhost:3000/emojify').save({text: "I can't feel my face"}).$promise
-            .then(function (result) {
-                $scope.lyrics = result;
-            })
     }
 
     $scope.submitQuery = onQuerySubmit;

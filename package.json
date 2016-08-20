@@ -24,7 +24,6 @@
     "morgan": "^1.7.0",
     "request": "^2.74.0",
     "xml2json": "^0.10.0"
-    "request": "^2.74.0"
   },
   "devDependencies": {
     "bower": "^1.7.9"

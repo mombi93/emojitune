@@ -5,7 +5,11 @@
             <div class="col-md-6 col-md-push-3">
                 <form ng-submit="submitQuery()">
                     <div class="form-group">
-                        <input type="text" class="form-control query-input" ng-model="query" placeholder="Search for songs">
+                        <input type="text" class="form-control query-input"
+                               ng-model="query"
+                               placeholder="Search for songs"
+                               ng-change="track = null"
+                        >
                     </div>
                 </form>
             </div>
@@ -18,7 +22,9 @@
         </div>
         <div class="col-md-8">
             <div class="lyrics">
-                <p ng-repeat="line in lyrics">{{line}}</p>
+                <div class="lyrics-inner">
+                    <p ng-repeat="line in lyrics track by $index" class="lyric-line">{{line}}</p>
+                </div>
             </div>
         </div>
     </div>
