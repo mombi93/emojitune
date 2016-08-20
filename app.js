@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 const logger = require('morgan');
 const path = require('path');
 const request = require('request');
+const xml2json = require('xml2json').toJson;
 
 /*
     Create app
@@ -30,37 +31,56 @@ const router = express.Router();
 
 router.post('/emojify', function(req, res) {
 
-    /*
-        Get the song name,
-        get lyrics
-        transform lyrics to emoji
-     */
+	/*
+	    Get the song name,
+	    get lyrics
+	    transform lyrics to emoji
+	 */
 
-	console.log(`user requested text ${req.body.text} to be translated`);
+    const parseArtist = req.body.artist.split(' ').join('+');
+    const parseTrack =req.body.track.split(' ').join('+');
 
-	const emojifyData = {
-		emoji_slova: req.body.text,
-		emoji_kluc: 'fmgvzz.zrv',
-		jezyk_s: 'en',
-		jezyk_na: 'en-x-emoji',
-		emoji_options: '-emoji_s_0-'
-	};
+    console.log(parseArtist);
+    console.log(parseTrack);
 
-	request.post({url:'http://emojitranslate.com/api/', formData: emojifyData}, (err, response, body) => {
+    const url = `http://api.lololyrics.com/0.5/getLyric?artist=${parseArtist}&track=${parseTrack}`;
 
-		if (!err && response.statusCode == 200) {
-			console.log(response.body);
-			console.log('my body is ', body);
-			res.json({
-				response: body
+    console.log(url);
+
+	request(url, (err, response, body) => {
+
+			//var json = JSON.stringify(xml2json(body));
+			var json = JSON.parse(xml2json(body));
+			//console.log(json);
+			//res.json({response: json.result.response});
+
+			const emojifyData = {
+				emoji_slova: json.result.response,
+				emoji_kluc: 'fmgvzz.zrv',
+				jezyk_s: 'en',
+				jezyk_na: 'en-x-emoji',
+				emoji_options: '-emoji_s_0-'
+			};
+
+			request.post({
+				url: 'http://emojitranslate.com/api/',
+				formData: emojifyData
+			}, (err2, response2, body2) => {
+
+				if (!err && response2.statusCode == 200) {
+					console.log('my body is ', body2);
+					res.json({
+						response: body2.split('\n')
+					});
+				} else {
+					console.error(err);
+					res.json({
+						response: 'error'
+					});
+				}
 			});
-		} else {
-            console.error(err);
-            res.json({
-    			response: 'error'
-    		});
-        }
-	});
+
+		});
 })
 
 app.use('/', router);
