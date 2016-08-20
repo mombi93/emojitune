@@ -23,8 +23,7 @@
     "express": "^4.14.0",
     "morgan": "^1.7.0",
     "request": "^2.74.0"
-  }
-  "homepage": "https://github.com/mombi93/emojitune#readme",
+  },
   "devDependencies": {
     "bower": "^1.7.9"
   }

@@ -20,17 +20,13 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
 	extended: false
 }));
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'client')));
+app.use('/bower_components',  express.static(__dirname + '/bower_components'));
 
 /*
     Define your routes
 */
 const router = express.Router();
-router.get('/', (req, res) => {
-	res.json({
-		message: 'Hello world!'
-	});
-});
 
 router.post('/emojify', function(req, res) {
 

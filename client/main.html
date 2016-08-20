@@ -1,0 +1,25 @@
+<div class="container" ng-class="{'showing-track': track}">
+    <div class="header">
+        <h1>emojitune</h1>
+        <div class="row">
+            <div class="col-md-6 col-md-push-3">
+                <form ng-submit="submitQuery()">
+                    <div class="form-group">
+                        <input type="text" class="form-control query-input" ng-model="query" placeholder="Search for songs">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" ng-show="track">
+        <div class="col-md-4">
+            <spotify-widget track="track.id"></spotify-widget>
+        </div>
+        <div class="col-md-8">
+            <div class="lyrics">
+                <p ng-repeat="line in lyrics">{{line}}</p>
+            </div>
+        </div>
+    </div>
+</div>

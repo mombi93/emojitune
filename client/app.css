@@ -1,0 +1,36 @@
+body {
+    background: rgba(54, 33, 255, 1);
+    color: white;
+    font-family: 'Baloo Paaji', cursive;
+    font-size: 20px;
+}
+
+.form-control {
+    border-radius: 0;
+    background: rgba(255, 255, 255, 0.5);
+    color: white;
+}
+
+h1 {
+    text-align: center;
+}
+
+.query-input {
+}
+.query-input::-webkit-input-placeholder {
+    color: rgba(51, 31, 226, 1);
+}
+
+.lyrics {
+    height: 380px;
+    background: rgba(0, 0, 0, 0.67);
+}
+
+.header {
+    margin-top: 40vh;
+    transition: margin 500ms ease;
+    margin-bottom: 40px;
+}
+.showing-track .header {
+    margin-top: 40px;
+}
