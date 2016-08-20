@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 const logger = require('morgan');
 const path = require('path');
 const request = require('request');
+const xml2json = require('xml2json').toJson;
 
 /*
     Create app
@@ -32,7 +33,7 @@ router.get('/', (req, res) => {
 	});
 });
 
-router.post('/emojify', function(req, res) {
+router.get('/emojify', function(req, res) {
 
     /*
         Get the song name,
@@ -42,21 +43,28 @@ router.post('/emojify', function(req, res) {
 
 	console.log(`user requested text ${req.body.text} to be translated`);
 
+	request('http://api.lololyrics.com/0.5/getLyric?artist=Taylor+Swift&track=Blank+space',
+		(err, response, body) => {
+
+	//var json = JSON.stringify(xml2json(body));
+	var json = JSON.parse(xml2json(body));
+	//console.log(json);
+	//res.json({response: json.result.response});
+
 	const emojifyData = {
-		emoji_slova: req.body.text,
+		emoji_slova: json.result.response,
 		emoji_kluc: 'fmgvzz.zrv',
 		jezyk_s: 'en',
 		jezyk_na: 'en-x-emoji',
 		emoji_options: '-emoji_s_0-'
 	};
 
-	request.post({url:'http://emojitranslate.com/api/', formData: emojifyData}, (err, response, body) => {
+	request.post({url:'http://emojitranslate.com/api/', formData: emojifyData}, (err2, response2, body2) => {
 
-		if (!err && response.statusCode == 200) {
-			console.log(response.body);
-			console.log('my body is ', body);
+		if (!err && response2.statusCode == 200) {
+			console.log('my body is ', body2);
 			res.json({
-				response: body
+				response: body2
 			});
 		} else {
             console.error(err);
@@ -64,6 +72,8 @@ router.post('/emojify', function(req, res) {
     			response: 'error'
     		});
         }
+	});
+
 	});
 })
 
